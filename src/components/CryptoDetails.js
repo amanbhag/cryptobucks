@@ -4,8 +4,13 @@ import { CryptoContext } from "../context/CryptoContext";
 import { useNavigate, useParams } from "react-router-dom";
 import Chart from "./Chart";
 
+import PointChart from "./PointChart";
+import ChartOfPie from "./PieChart";
+import ChartOfBar from "./ChartOfBar";
+
 const HighLowINdicator = ({ current_price, high, low }) => {
   const [green, setgreen] = useState();
+
   useEffect(() => {
     let total = high - low;
     let greenZone = ((high - current_price) * 100) / total;
@@ -31,6 +36,7 @@ const HighLowINdicator = ({ current_price, high, low }) => {
 };
 
 const CryptoDetails = () => {
+  const [chartType, setchartType] = useState("Line_chart");
   const { getCoinData, coinData: data, currency } = useContext(CryptoContext);
   let { coinId } = useParams();
   let navigate = useNavigate();
@@ -40,6 +46,14 @@ const CryptoDetails = () => {
   console.log(coinId);
   const close = () => {
     navigate("..");
+  };
+  let handleSort = (e) => {
+    e.preventDefault();
+    console.log("i got clicked");
+
+    let val = e.target.value;
+    setchartType(val);
+    console.log(chartType);
   };
   return ReactDOM.createPortal(
     <div
@@ -301,7 +315,25 @@ const CryptoDetails = () => {
             </div>
 
             <div className="flex flex-col w-[55%] h-full pl-3 ">
-              <Chart id={data.id} />
+              <select
+                name="sortby"
+                className="rounded bg-gray-200 text-base pl-2 pr-10 py-0.5 leading-4 capitalize focus: outline-0 text-cyan"
+                onClick={handleSort}
+              >
+                <option value="Line_chart">Line chart</option>
+                <option value="bar_chart">Bar chart</option>
+
+                {/* <option value="point_chart">point chart</option> */}
+
+                <option value="pie_chart">pie chart</option>
+              </select>
+              {chartType === "Line_chart" ? <Chart id={data.id} /> : null}
+              {chartType === "bar_chart" ? <ChartOfBar id={data.id} /> : null}
+
+              {chartType === "point_chart" ? <PointChart /> : null}
+              {chartType === "pie_chart" ? <ChartOfPie id={data.id} /> : null}
+
+              {/* <Chart id={data.id} /> */}
               <div className="flex flex-col mt-4 ">
                 <h3 className="text-white py-1 ">
                   <span className="text-gray-100 capitalize mr-1">

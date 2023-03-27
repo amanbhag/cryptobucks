@@ -1,6 +1,5 @@
 import React, { useContext, useLayoutEffect, useState } from "react";
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -8,58 +7,63 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
+  BarChart,
+  Bar,
 } from "recharts";
 import { CryptoContext } from "../context/CryptoContext";
 
-function CustomTooltip({ payload, label, active }) {
-  const { currency } = useContext(CryptoContext);
-  if (active && payload && payload.length > 0) {
-    return (
-      <div className="custom-tooltip">
-        <p className="label text-sm text-cyan">{`${label} : ${new Intl.NumberFormat(
-          "en-IN",
-          {
-            style: "currency",
-            currency: currency,
-            minimumFractionDigits: 3,
-          }
-        ).format(payload[0].value)}
-            }`}</p>
-      </div>
-    );
-  }
+// function CustomTooltip({ payload, label, active }) {
+//   const { currency } = useContext(CryptoContext);
+//   if (active && payload && payload.length > 0) {
+//     return (
+//       <div className="custom-tooltip">
+//         <p className="label text-sm text-white">{`${label} : ${new Intl.NumberFormat(
+//           "en-IN",
+//           {
+//             style: "currency",
+//             currency: currency,
+//             minimumFractionDigits: 3,
+//           }
+//         ).format(payload[0].value)}
+//             }`}</p>
+//       </div>
+//     );
+//   }
 
-  return null;
-}
+//   return null;
+// }
 
 const ChartComponent = ({ data, currency, type }) => {
+  const colors = [
+    "#70B0FA",
+    "#3D6BD4",
+    "#3D36B2",
+    "#7DEBD9",
+    "#00A7BD",
+    "#017991",
+    "#C996BF",
+    "#850A4D",
+    "#600336",
+  ];
   return (
-    <ResponsiveContainer height={"90%"}>
-      <LineChart width={400} height={400} data={data}>
-        <Line
-          type="monotone"
-          dataKey={type}
-          stroke="#14ffec"
-          strokeWidth={"2px"}
-        />
+    <ResponsiveContainer height={"90%"} width={"90%"}>
+      <BarChart width={730} height={250} data={data} barCategoryGap="15%">
+        <CartesianGrid strokeDasharray="3" />
 
-        <XAxis dataKey="date" hide />
-        <YAxis dataKey={type} hide domain={["auto", "auto"]} />
-        <CartesianGrid stroke="#323232" />
+        <XAxis dataKey="date" />
+        <YAxis />
+        {/* <YAxis dataKey={type} hide domain={["auto", "auto"]} /> */}
+        {/* <CartesianGrid stroke="#323232" /> */}
 
-        <Tooltip
-          content={<CustomTooltip />}
-          currency={currency}
-          cursor={false}
-          wrapperStyle={{ outline: "none" }}
-        />
-        <Legend />
-      </LineChart>
+        <Tooltip />
+        <Legend iconType="circle" />
+        <Bar dataKey={type} fill="cyan" />
+      </BarChart>
     </ResponsiveContainer>
   );
 };
 
-const Chart = ({ id }) => {
+const ChartOfBar = ({ id }) => {
   const [type, settype] = useState("prices");
   const [days, setdays] = useState(7);
   const [chartData, setchartData] = useState();
@@ -79,8 +83,6 @@ const Chart = ({ id }) => {
           };
         });
         setchartData(convertedData);
-
-        console.log("data from ", data);
       } catch (error) {
         console.log("error: ", error);
       }
@@ -91,7 +93,17 @@ const Chart = ({ id }) => {
 
   return (
     <div className="w-full h-[60%]">
-      <ChartComponent data={chartData} currency={currency} type={type} />
+      <ChartComponent
+        data={chartData}
+        currency={currency}
+        type={type}
+        margin={{
+          top: 0,
+          right: 0,
+          left: 0,
+          bottom: 0,
+        }}
+      />
       <div className="flex">
         <button
           className={`text-sm py-0.5 px-1.5 ml-2  bg-opacity-25 rounded capitalize ${
@@ -101,9 +113,9 @@ const Chart = ({ id }) => {
           } `}
           onClick={() => settype("prices")}
         >
-          prices
+          price
         </button>
-        <button
+        {/* <button
           className={`text-sm py-0.5 px-1.5 ml-2 bg-opacity-25 rounded capitalize ${
             type === "market_caps"
               ? "bg-cyan text-cyan"
@@ -122,7 +134,7 @@ const Chart = ({ id }) => {
           onClick={() => settype("total_volumes")}
         >
           Total Volumes
-        </button>
+        </button> */}
         <button
           className={`text-sm py-0.5 px-1.5 ml-2  bg-opacity-25 rounded capitalize ${
             days === 7 ? "bg-cyan text-cyan" : "bg-gray-200 text-gray-100"
@@ -152,4 +164,4 @@ const Chart = ({ id }) => {
   );
 };
 
-export default Chart;
+export default ChartOfBar;

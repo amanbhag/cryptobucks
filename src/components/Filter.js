@@ -39,6 +39,7 @@ const Filter = () => {
             ref={currencyRef}
             className="w-16 rounded bg-gray-200 placeholder:text-gray-100 pl-2 required outline-0 border border-transparent focus:border-cyan leading-4 "
             placeholder="usd"
+            required
           />
           <button type="submit" className="ml-1 cursor-pointer">
             <img src={SubmitIcon} alt="Submit" className="w-full h-auto " />

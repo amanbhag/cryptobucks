@@ -8,6 +8,8 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
+  PieChart,
+  Pie,
 } from "recharts";
 import { CryptoContext } from "../context/CryptoContext";
 
@@ -35,7 +37,20 @@ function CustomTooltip({ payload, label, active }) {
 const ChartComponent = ({ data, currency, type }) => {
   return (
     <ResponsiveContainer height={"90%"}>
-      <LineChart width={400} height={400} data={data}>
+      <PieChart width={730} height={250}>
+        <Pie
+          data={data}
+          dataKey={type}
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          innerRadius={60}
+          outerRadius={80}
+          fill="#82ca9d"
+          label
+        />
+      </PieChart>
+      {/* <LineChart width={400} height={400} data={data}>
         <Line
           type="monotone"
           dataKey={type}
@@ -54,12 +69,12 @@ const ChartComponent = ({ data, currency, type }) => {
           wrapperStyle={{ outline: "none" }}
         />
         <Legend />
-      </LineChart>
+      </LineChart> */}
     </ResponsiveContainer>
   );
 };
 
-const Chart = ({ id }) => {
+const ChartOfPie = ({ id }) => {
   const [type, settype] = useState("prices");
   const [days, setdays] = useState(7);
   const [chartData, setchartData] = useState();
@@ -78,9 +93,11 @@ const Chart = ({ id }) => {
             [type]: item[1],
           };
         });
+
+        console.log("converted", convertedData);
         setchartData(convertedData);
 
-        console.log("data from ", data);
+        console.log("data frnnnnnnnnnnnnnnnnnnnnnnnom ", data);
       } catch (error) {
         console.log("error: ", error);
       }
@@ -103,7 +120,7 @@ const Chart = ({ id }) => {
         >
           prices
         </button>
-        <button
+        {/* <button
           className={`text-sm py-0.5 px-1.5 ml-2 bg-opacity-25 rounded capitalize ${
             type === "market_caps"
               ? "bg-cyan text-cyan"
@@ -122,7 +139,7 @@ const Chart = ({ id }) => {
           onClick={() => settype("total_volumes")}
         >
           Total Volumes
-        </button>
+        </button> */}
         <button
           className={`text-sm py-0.5 px-1.5 ml-2  bg-opacity-25 rounded capitalize ${
             days === 7 ? "bg-cyan text-cyan" : "bg-gray-200 text-gray-100"
@@ -139,17 +156,17 @@ const Chart = ({ id }) => {
         >
           14 days
         </button>
-        <button
+        {/* <button
           className={`text-sm py-0.5 px-1.5 ml-2 bg-opacity-25 rounded capitalize  ${
-            days === 30 ? "bg-cyan text-cyan" : "bg-gray-200 text-gray-100"
+            days === 14 ? "bg-cyan text-cyan" : "bg-gray-200 text-gray-100"
           }`}
-          onClick={() => setdays(30)}
+          onClick={() => setdays(14)}
         >
-          30 days
-        </button>
+          14 days
+        </button> */}
       </div>
     </div>
   );
 };
 
-export default Chart;
+export default ChartOfPie;

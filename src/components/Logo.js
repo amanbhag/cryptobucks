@@ -6,7 +6,7 @@ const Logo = () => {
   return (
     <Link
       to="/"
-      className="absolute top-[1.5rem] left-[1.5rem] [text-decoration: none] text-lg text-cyan flex items-center"
+      className="absolute sm:top-[1.5rem] top-[1rem] sm:left-[1.5rem] left-[1rem] [text-decoration:none]  text-cyan cursor-pointer flex items-center sm:text-lg text-md "
     >
       <img src={logoSvg} alt="CryptoBucks" srcset="" />
       <span>CryptoMarketCap</span>

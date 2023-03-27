@@ -16,7 +16,7 @@ const TrendingCoin = ({ data }) => {
       {data ? (
         <>
           <h3 className="txt-base flex items-center my-0.5">
-            <span className="text-gray-200 capitalize">Name:&nbsp; </span>
+            <span className="text-green capitalize">Name:&nbsp; </span>
             <span className="text-cyan">{data.name}</span>
             <img
               src={data.small}
@@ -25,15 +25,13 @@ const TrendingCoin = ({ data }) => {
             />
           </h3>
           <h3 className="txt-base flex items-center my-0.5">
-            <span className="text-gray-200 capitalize">
+            <span className="text-green capitalize">
               Market cap rank:&nbsp;
             </span>
             <span className="text-cyan">{data.market_cap_rank}</span>
           </h3>
           <h3 className="txt-base flex items-center my-0.5">
-            <span className="text-gray-200 capitalize">
-              price(in btc)&nbsp;
-            </span>
+            <span className="text-green capitalize">price(in btc)&nbsp;</span>
             <span className="text-cyan">
               {new Intl.NumberFormat("en-IN", {
                 style: "currency",
@@ -43,7 +41,7 @@ const TrendingCoin = ({ data }) => {
             </span>
           </h3>
           <h3 className="txt-base flex items-center my-0.5">
-            <span className="text-gray-200 capitalize">Score:&nbsp;</span>
+            <span className="text-green capitalize">Score:&nbsp;</span>
             <span className="text-cyan">{data.score}</span>
           </h3>
           <img
